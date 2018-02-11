@@ -7,10 +7,27 @@ const express = require('express'),
 app.use(bodyParser.json());
 app.use(cors());
 
-app.post('/create-user', (req, res)=> {
-    console.log(req.body);
+app.get('/getuser', (req, res) => {
+    res.json({
+        msg: "hello"
+    })
 })
 
-app.listen(2000, ()=> {
+app.post('/register', (req, res) => {
+    console.log("in /register post");
+    console.log(req.body);
+
+    db.saveUser(req.body).then((data)=>{
+        res.json({
+            success: true
+        })
+    }).catch((err)=>{
+        res.json({
+            success: false
+        })
+    });
+})
+
+app.listen(2000, () => {
     console.log("2000 running");
 })

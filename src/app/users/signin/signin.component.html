@@ -1,4 +1,4 @@
-<div class="container">
+<!-- <div class="container">
   <div id="loginbox" style="margin-top:50px;" class="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
     <div class="panel panel-info">
       <div class="panel-heading" style="background-color:#222222; color:white">
@@ -38,10 +38,10 @@
           </div>
 
 
-          <div style="margin-top:10px" class="form-group">
+          <div style="margin-top:10px" class="form-group"> -->
             <!-- Button -->
 
-            <div class="col-sm-12 controls">
+            <!-- <div class="col-sm-12 controls">
               <a id="btn-login" href="#" class="btn btn-success">Login </a>
               <a id="btn-fblogin" href="#" class="btn btn-primary">Login with Facebook</a>
 
@@ -65,5 +65,34 @@
 
       </div>
     </div>
+  </div>
+</div> -->
+
+
+<div class="panel panel-default col-md-6 col-md-offset-3">
+  <div class="panel-heading">
+      <h2 class="panel-title">Sign in</h2>
+  </div>
+  <div class="panel-body">
+      <form role="form" name="signinForm">
+          <div class="form-group">
+              <h4>
+                  <label for="username">Username:</label>
+              </h4>
+              <input type="text" name="username" [(ngModel)]="credentials.username" id="username" class="form-control" placeholder="Username"
+                  required>
+              <!-- <p ng-if="signinForm.username.$touched && signinForm.username.$invalid">The name is required.</p>
+              <p ng-if="invalidUsername">The username does not exist!</p> -->
+          </div>
+          <div class="form-group">
+              <h4>
+                  <label for="password">Password:</label>
+              </h4>
+              <input type="password" name="password" [(ngModel)]="credentials.password" id="password" class="form-control" placeholder="Password"
+                  required>
+              <!-- <p ng-if="invalidPassword">The Password is invalid!</p> -->
+          </div>
+          <input type="submit" value="Sign in" ng-disabled="signinForm.$invalid" class="btn btn-primary btn-block">
+      </form>
   </div>
 </div>
