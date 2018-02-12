@@ -12,11 +12,19 @@ import { RegisterComponent } from './users/register/register.component';
 import { NavBarComponent } from './nav-bar/nav-bar.component';
 import { SigninComponent } from './users/signin/signin.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
+import { MyaccountComponent } from './users/myaccount/myaccount.component';
 
+// Services
 import { UsersDataService } from './users-data.service';
+import { AuthService } from './auth/auth.service';
+import { CookieService } from 'ngx-cookie-service';
+
+// Guards 
+import { AuthGuard } from './auth/auth.guard';
 const appRoutes: Routes = [
   { path: 'register', component: RegisterComponent },
   { path: 'signin',      component: SigninComponent },
+  { path: 'myaccount',      component: MyaccountComponent, canActivate: [AuthGuard] },
   { path: '**', component: PageNotFoundComponent }
 ];
 
@@ -26,7 +34,8 @@ const appRoutes: Routes = [
     RegisterComponent,
     NavBarComponent,
     SigninComponent,
-    PageNotFoundComponent
+    PageNotFoundComponent,
+    MyaccountComponent
   ],
   imports: [
     BrowserModule,
@@ -37,7 +46,10 @@ const appRoutes: Routes = [
     )
   ],
   providers: [
-    UsersDataService
+    UsersDataService,
+    AuthService,
+    CookieService,
+    AuthGuard
   ],
   bootstrap: [AppComponent]
 })

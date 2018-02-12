@@ -88,3 +88,37 @@ module.exports.saveUser = (newUser) => {
     })
 
 }
+
+module.exports.signinVerification = (creds) => {
+    return new Promise((resolve, reject) => {
+        User.find({username : creds.username}, (err, docs) => {
+            if(err) {
+                reject("some error!");
+            } else {
+                if(docs == [] || docs.length == 0) {
+                    reject("Username does not exist!");
+                } else if(docs[0].password == creds.password){
+                    resolve("sign in success");
+                } else {
+                    reject("Password does not match!");
+                }
+            }
+        })
+    })
+}
+
+module.exports.getUserByUsername = (username) => {
+    return new Promise((resolve, reject)=> {
+        User.find({username : username}, (err, docs) => {
+            if(err) {
+                reject("some error!");
+            } else {
+                if(docs == [] || docs.length == 0) {
+                    reject("Username not found");
+                } else {
+                    resolve(docs[0]);
+                }
+            }
+        })
+    })
+}

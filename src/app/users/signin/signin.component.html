@@ -92,7 +92,7 @@
                   required>
               <!-- <p ng-if="invalidPassword">The Password is invalid!</p> -->
           </div>
-          <input type="submit" value="Sign in" ng-disabled="signinForm.$invalid" class="btn btn-primary btn-block">
+          <input type="submit" value="Sign in" (click)="signinFn()"class="btn btn-primary btn-block">
       </form>
   </div>
 </div>

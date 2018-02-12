@@ -28,6 +28,38 @@ app.post('/register', (req, res) => {
     });
 })
 
+app.post('/signin', (req, res)=>{
+    console.log(req.body);
+    db.signinVerification(req.body).then((data)=> {
+        res.json({
+            success : true,
+            msg : data,
+            username : req.body.username
+        })
+    }).catch((err) => {
+        res.json({
+            success : false,
+            msg : err,
+            username : null
+        })
+    });
+})
+
+app.get('/users/:uname', (req, res) => {
+    db.getUserByUsername(req.params.uname).then((data)=> {
+        console.log(data);
+        res.json({
+            success : true,
+            data : data
+        });
+    }).catch((err) => {
+        res.json({
+            success : false,
+            data : err
+        });
+    });
+})
+
 app.listen(2000, () => {
     console.log("2000 running");
 })
