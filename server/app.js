@@ -2,16 +2,12 @@ const express = require('express'),
     app = express(),
     bodyParser = require('body-parser'),
     cors = require('cors'),
-    db = require('./db');
+    db = require('./db'),
+    jwt = require('jsonwebtoken');
+
 
 app.use(bodyParser.json());
 app.use(cors());
-
-app.get('/getuser', (req, res) => {
-    res.json({
-        msg: "hello"
-    })
-})
 
 app.post('/register', (req, res) => {
     console.log("in /register post");
@@ -30,11 +26,15 @@ app.post('/register', (req, res) => {
 
 app.post('/signin', (req, res)=>{
     console.log(req.body);
+    var token = jwt.sign({'uname': req.body.username}, 'marlabs-secret-key', {
+        expiresIn: '1h'
+    });
     db.signinVerification(req.body).then((data)=> {
         res.json({
             success : true,
             msg : data,
-            username : req.body.username
+            username : req.body.username,
+            'token' : token
         })
     }).catch((err) => {
         res.json({
@@ -43,6 +43,19 @@ app.post('/signin', (req, res)=>{
             username : null
         })
     });
+})
+
+app.use((req, res, next)=> {
+    var token = req.headers.authorization;
+    jwt.verify(token, 'marlabs-secret-key', (err, decoded)=> {
+        if(err) {
+            console.log('Error');
+        } else  {
+            req.decoded = decoded;
+            console.log(req.decoded);
+            next();
+        }
+    })
 })
 
 app.get('/users/:uname', (req, res) => {
@@ -58,6 +71,12 @@ app.get('/users/:uname', (req, res) => {
             data : err
         });
     });
+})
+
+app.get('/getuser', (req, res) => {
+    res.json({
+        msg: "hello"
+    })
 })
 
 app.listen(2000, () => {

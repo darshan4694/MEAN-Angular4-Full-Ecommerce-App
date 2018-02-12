@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
 import { AuthService } from './auth/auth.service';
@@ -31,7 +31,9 @@ export class UsersDataService {
   }
 
   getUserDetails(){
-    return  this._http.get('http://localhost:2000/users/'+this._auth.getLoggedInUser());
+    return  this._http.get('http://localhost:2000/users/'+this._auth.getLoggedInUser(), {
+      headers : new HttpHeaders().set('authorization', this._auth.fetchToken())
+    });
     // this._http.get('http://localhost:2000/users/'+this._auth.getLoggedInUser()).subscribe(
     // (data : any) => {
     //   if(data.success){

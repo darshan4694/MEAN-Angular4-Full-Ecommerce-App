@@ -20,6 +20,7 @@ export class AuthService {
         if (data.success) {
           this._cookie.set("loggedIn", data.success);
           this._cookie.set("loggedInUser", data.username);
+          this._cookie.set("m_token", data.token);
           this.isLoggedInSub.next(data.success);
           this._router.navigate(['/myaccount']);
         } else {
@@ -39,5 +40,9 @@ export class AuthService {
 
   getLoggedInUser() {
     return this._cookie.get('loggedInUser');
+  }
+
+  fetchToken() {
+    return this._cookie.get('m_token');
   }
 }

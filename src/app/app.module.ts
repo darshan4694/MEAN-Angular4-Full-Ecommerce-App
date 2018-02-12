@@ -2,7 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { FormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HttpInterceptor, HTTP_INTERCEPTORS } from '@angular/common/http';
 
 // material //
 import {MatButtonModule, MatCheckboxModule} from '@angular/material';
@@ -18,6 +18,7 @@ import { MyaccountComponent } from './users/myaccount/myaccount.component';
 import { UsersDataService } from './users-data.service';
 import { AuthService } from './auth/auth.service';
 import { CookieService } from 'ngx-cookie-service';
+import { AuthinterceptorService } from './auth/authinterceptor.service';
 
 // Guards 
 import { AuthGuard } from './auth/auth.guard';
@@ -49,7 +50,12 @@ const appRoutes: Routes = [
     UsersDataService,
     AuthService,
     CookieService,
-    AuthGuard
+    AuthGuard,
+    {
+      provide : HTTP_INTERCEPTORS,
+      useClass : AuthinterceptorService,
+      multi : true
+    }
   ],
   bootstrap: [AppComponent]
 })
